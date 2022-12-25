@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head></head>
+    <body>
+        <div>이메일 등록 페이지</div></br>
+        <form action="{% url 'main:login' %}"  onsubmit="loginForm(this); return false;" method="POST" >
+            {% csrf_token %}
+            <input type="hidden" name="real">
+            <input type="text" name="id" id ="id" placeholder="아이디"></br>
+            <input type="password" name="password" id ="password" placeholder ="비밀번호"></br></br>
+            <button type="submit">로그인</button></br>
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message.message }}
+                {% endfor %}
+            {% endif %}
+        </form>
+    </body>
+</html>

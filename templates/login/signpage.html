@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <body>
+        <button OnClick= "location.href='{% url 'main:login' %}'">로그인</button></br></br>
+        <form action="{% url 'main:signin' %}" onsubmit = "signForm(this); return(false)" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="real">
+            <input type="text" name="id" id ="id" placeholder="아이디"></br>
+            <input type="password" name="password" id ="password" placeholder="비밀번호"></br>
+            <input type="password" name="check_password" id ="check_password" placeholder="비밀번호 확인"></br></br>
+            <button type="submit">회원가입</button>
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message.message }}
+                {% endfor %}
+            {% endif %}
+        </form>
+
+<!-- 자 바 스 크 립 트 Start -->
+{% block script %}
+        <script	src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+        <script>
+            function signForm(form){
+                if(form.password.value.length<8){
+                    alert('비밀번호는 8자리 이상이어야 합니다.');
+                    return;
+                }
+                if(form.password.value != form.check_password.value){
+                    alert('비밀번호 확인이 일치하지 않습니다.');
+                    return;
+                }
+                form.real.value = sha256(form.password.value);
+                form.password.value = '';
+                form.check_password.value = '';
+                form.submit();
+            }
+        </script>
+{% endblock %}
+<!-- 자 바 스 크 립 트 End -->
+    </body>
+</html>

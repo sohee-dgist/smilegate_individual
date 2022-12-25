@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <body>
+        <span> 안녕하세요 {{userid}} 님 로그인 환영합니다. </span></br>
+        <button OnClick= "location.href='{% url 'main:logout' %}'">로그아웃</button>
+        <button OnClick= "location.href='{% url 'main:email' %}'">이메일 등록</button>
+        <button OnClick= "location.href='{% url 'main:signout' %}'">탈퇴하기</button>
+        {% if messages %}
+        <script type="text/javascript">
+            alert('토큰이 유효하지 않습니다.');
+            window.location.href = '{% url 'main:logout' %}';
+        </script>
+        {% endif %}
+    </body>
+</html>

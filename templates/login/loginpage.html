@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head></head>
+    <body>
+        <div>로그인 페이지</div></br>
+        <form action="{% url 'main:login' %}"  onsubmit="loginForm(this); return false;" method="POST" >
+            {% csrf_token %}
+            <input type="hidden" name="real">
+            <input type="text" name="id" id ="id" placeholder="아이디"></br>
+            <input type="password" name="password" id ="password" placeholder ="비밀번호"></br></br>
+            <button type="submit">로그인</button></br>
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message.message }}
+                {% endfor %}
+            {% endif %}
+        </form>
+
+        <a href='{% url 'main:signin' %}'>회원가입</a></span>
+        <a href='{% url 'main:findpw' %}'>비밀번호 찾기</a></span>
+<!-- 자 바 스 크 립 트 Start -->
+{% block script %}
+        <script	src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+        <script>
+            function loginForm(form){
+                form.real.value = sha256(form.password.value);
+                form.password.value = '';
+                form.submit();
+            }
+        </script>
+{% endblock %}
+<!-- 자 바 스 크 립 트 End -->
+    </body>
+</html>
